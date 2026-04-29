@@ -1401,10 +1401,8 @@ function defaultState() {
   return {
     meals: {},        // { "2025-05-01": [{type, name, notes, id}] }
     grocery: [
-      { cat: 'Produce', items: [] },
-      { cat: 'Protein', items: [] },
-      { cat: 'Pantry', items: [] },
-      { cat: 'Dairy', items: [] },
+      { cat: 'Grocery List', items: [] },
+      { cat: 'Costco List', items: [] },
     ],
     recipes: [
       { id: uid(), name: 'Overnight Oats', cat: 'breakfast', tags: ['quick','make-ahead'], notes: '' },
@@ -1713,7 +1711,7 @@ function renderGrocery() {
     const card = document.createElement('div');
     card.className = 'grocery-card';
 
-    const catIcons = { Produce: '🥦', Protein: '🥩', Pantry: '🏺', Dairy: '🧀' };
+    const catIcons = { 'Grocery List': '🛒', 'Costco List': '🏪' };
     const icon = catIcons[cat.cat] || '🛒';
 
     card.innerHTML = `<h4>${icon} ${cat.cat}</h4>`;
@@ -2309,6 +2307,11 @@ function gdriveSignIn() {
     showSetupNotice();
     return;
   }
+  if (typeof google === 'undefined' || !google.accounts) {
+    setSyncStatus('syncing', 'Loading Google sign-in…');
+    setTimeout(gdriveSignIn, 1000);
+    return;
+  }
   const client = google.accounts.oauth2.initTokenClient({
     client_id: GDRIVE_CLIENT_ID,
     scope:     GDRIVE_SCOPES,
@@ -2326,7 +2329,7 @@ function gdriveSignIn() {
 }
 
 function gdriveSignOut() {
-  google.accounts.oauth2.revoke(gdriveToken, () => {});
+  if (typeof google !== 'undefined') google.accounts.oauth2.revoke(gdriveToken, () => {});
   gdriveToken      = null;
   gdriveSyncFileId = null;
   gdriveUserInfo   = null;
