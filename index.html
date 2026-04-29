@@ -2294,7 +2294,7 @@ let gdriveUserInfo   = null;
 let syncDebounceTimer = null;
 
 function gdriveConfigured() {
-  return GDRIVE_CLIENT_ID && GDRIVE_CLIENT_ID !== '846207268232-hg1q6r2mdddgf1ncqugq8gvogn9v8t5d.apps.googleusercontent.com';
+  return GDRIVE_CLIENT_ID && GDRIVE_CLIENT_ID !== 'YOUR_GOOGLE_CLIENT_ID_HERE' && GDRIVE_CLIENT_ID.length > 20;
 }
 
 function setSyncStatus(state, label) {
@@ -2454,7 +2454,7 @@ function showSetupNotice() {
       <li>Enable <strong>Google Drive API</strong> under APIs & Services</li>
       <li>OAuth consent screen → External → add your Gmail as test user</li>
       <li>Credentials → Create OAuth 2.0 Client ID → Web app → add your GitHub Pages URL as authorized origin</li>
-      <li>Copy the Client ID and replace <code>YOUR_GOOGLE_CLIENT_ID_HERE</code> at the top of the <code>&lt;script&gt;</code> section in this file</li>
+      <li>Copy the Client ID and replace <code>846207268232-hg1q6r2mdddgf1ncqugq8gvogn9v8t5d.apps.googleusercontent.com</code> at the top of the <code>&lt;script&gt;</code> section in this file</li>
     </ol>
     <div style="margin-top:8px;font-size:11px;color:var(--medium)">
       Data is stored in your Drive's private appDataFolder — not visible in your Drive UI, only this app can access it.
